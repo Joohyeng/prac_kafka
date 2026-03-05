@@ -1,5 +1,6 @@
 package com.example.producer;
 
+import com.example.producer.model.MessageDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -9,10 +10,16 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class MessageProduceService {
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    //    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<Long, MessageDto.Abcd> kafkaTemplate;
 
-    public void sendMessasge(String topic, String message){
-        log.debug("MessageProducer - sendMessage : {}, {}",topic,message);
-        kafkaTemplate.send(topic, message);
+//    public void sendMessage(String topic, String message) {
+//        log.debug("MessageProducer - sendMessage : [{}] - {}", topic, message);
+//        kafkaTemplate.send(topic, message);
+//    }
+
+    public void sendMessage(String topic, MessageDto.Abcd dto) {
+
+        kafkaTemplate.send(topic, dto.getIdx(), dto);
     }
 }
